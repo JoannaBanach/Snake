@@ -43,7 +43,9 @@ class Snake:
         for part in self.elements:
             part.paint()
 
-    def increase(self, x, y):
+    def increase(self):
+        x = self.elements[-1].coord()[0] + self.x_delta
+        y = self.elements[-1].coord()[1] + self.y_delta
         self.elements.append(SnakePart(x, y, self.background))
 
     def length(self):
@@ -79,7 +81,7 @@ class Snake:
                 new_y = self.elements[0].y + self.y_delta
             return new_x, new_y
 
-    def update(self, apple=None, apples=None, **kwargs):
+    def update(self, apples=None, **kwargs):
         coords_occupied = self.coords()
         obstacle_coords = False
         for arg_name, arg_value in zip(kwargs.keys(), kwargs.values()):
@@ -95,24 +97,20 @@ class Snake:
 
         else:
 
-            if apple is not None:
-                if new_x == apple.x and new_y == apple.y:
-                    self.increase(0, 0)
-                    if obstacle_coords:
-                        apple.update(self.coords(), snake_length=self.length(), obstacles_coords=obstacle_coords)
+            for i in range(len(apples)):
+                if new_x == apples[i].x and new_y == apples[i].y:
+                    apple_color = apples[i].check_color()
+                    if apple_color[0] == 255 and apple_color[1] == 0 \
+                            and apple_color[2] == 0:
+                        self.increase()
                     else:
-                        apple.update(self.coords(), snake_length=self.length())
-            elif apples is not None:
-                for i in range(len(apples)):
-                    if new_x == apples[i].x and new_y == apples[i].y:
-                        self.increase(0, 0)
-                        if obstacle_coords:
-                            apples[i].update(self.coords(), snake_length=self.length(), obstacles_coords=obstacle_coords)
-                        else:
-                            apples[i].update(self.coords(), snake_length=self.length())
+                        for j in range(3):
+                            self.increase()
 
-            if self.if_green_apple and (self.length() % 10 == 0 or self.length() % 10 == 1) and self.length() > 2:
-                self.increase(0, 0)
+                    if obstacle_coords:
+                        apples[i].update(self.coords(), snake_length=self.length(), obstacles_coords=obstacle_coords)
+                    else:
+                        apples[i].update(self.coords(), snake_length=self.length())
 
             for ind in reversed(range(self.length())):
                 if ind != 0:

@@ -31,6 +31,10 @@ class Apple:
         coord = (self.x, self.y)
         return coord
 
+    def check_color(self):
+        color = self.color
+        return color
+
     def update(self, snake_coords, **kwargs):
         old_coord = self.coord()
         coords_occupied = snake_coords
