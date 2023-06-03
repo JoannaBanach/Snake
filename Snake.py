@@ -108,9 +108,10 @@ class Snake:
                             self.increase()
 
                     if obstacle_coords:
-                        apples[i].update(self.coords(), snake_length=self.length(), obstacles_coords=obstacle_coords)
+                        apples[i].update(self.coords(), snake_length=self.length(), obstacles_coords=obstacle_coords,
+                                         apples=apples)
                     else:
-                        apples[i].update(self.coords(), snake_length=self.length())
+                        apples[i].update(self.coords(), snake_length=self.length(), apples=apples)
 
             for ind in reversed(range(self.length())):
                 if ind != 0:

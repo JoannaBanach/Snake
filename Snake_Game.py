@@ -2,6 +2,7 @@ import pygame
 import Apple_Class as ac
 import Obstacle_Class as oc
 import Snake as se
+import threading
 
 
 class SnakeGame:
@@ -16,6 +17,7 @@ class SnakeGame:
         self.level = level
         self.area = (0, 0, 400, 400)
         self.FPS_acc = 0
+        self.snake_exists = False
 
     def update_speed(self, move, snake_speed):
 
@@ -76,6 +78,14 @@ class SnakeGame:
         score_text = font.render(f'Score: {self.score}', True, (255, 255, 255))
         screen.blit(score_text, (10, 410))
 
+    def accelerate(self):
+        if self.level == 'Hard':
+            self.FPS_acc += 2
+        elif self.level == 'Super Hard':
+            self.FPS_acc *= 1.2
+        if self.snake_exists:
+            threading.Timer(15.0, self.accelerate).start()
+
     def start_game(self):
         pygame.init()
         clock = pygame.time.Clock()
@@ -101,7 +111,7 @@ class SnakeGame:
             if_walls = True
             self.area = (10, 10, 380, 380)
         elif self.level == 'Hard':
-            apples_number = 1
+            apples_number = 3
             if_green_apple = True
             if_walls = True
             self.area = (10, 10, 380, 380)
@@ -129,6 +139,9 @@ class SnakeGame:
             else:
                 apples.append(ac.Apple(background, apples=apples, if_green_apple=if_green_apple))
         snake = se.Snake(background, if_walls=if_walls, if_green_apple=if_green_apple)
+        self.snake_exists = True
+
+        threading.Timer(10.0, self.accelerate).start()
 
         while not self.done:
             clock.tick(self.FPS)
@@ -147,10 +160,6 @@ class SnakeGame:
                     if not self.done else self.done
             else:
                 self.done = snake.update(apples=apples) if not self.done else self.done
-            if self.level == 'Hard' and snake.length() % 10 == 0:
-                self.FPS_acc += 2
-            elif self.level == 'Super Hard' and snake.length() % 10 == 0:
-                self.FPS_acc *= 1.2
 
             if obstacle_coords:
                 obstacle1.paint()
@@ -167,5 +176,6 @@ class SnakeGame:
             pygame.display.flip()
 
         pygame.quit()
-
+        del snake
+        self.snake_exists = False
         return self.score

@@ -14,8 +14,12 @@ class Apple:
 
         coords_occupied = []
         for arg_name, arg_value in zip(kwargs.keys(), kwargs.values()):
-            if arg_name in ['obstacles_coords', 'apples']:
+            if arg_name == 'obstacles_coords':
                 coords_occupied = [*coords_occupied, *arg_value]
+            elif arg_name == 'apples':
+                apples_coords = []
+                for i in range(len(arg_value)):
+                    apples_coords.append(arg_value[i].coord())
 
         while self.coord() in coords_occupied:
             self.x = random.randint(1, 38) * 10
@@ -39,8 +43,12 @@ class Apple:
         old_coord = self.coord()
         coords_occupied = snake_coords
         for arg_name, arg_value in zip(kwargs.keys(), kwargs.values()):
-            if arg_name in ['obstacles_coords', 'apples']:
+            if arg_name == 'obstacles_coords':
                 coords_occupied = [*coords_occupied, *arg_value]
+            elif arg_name == 'apples':
+                apples_coords = []
+                for i in range(len(arg_value)):
+                    apples_coords.append(arg_value[i].coord())
             elif arg_name == 'snake_length' and self.if_green_apple:
                 if arg_value % 10 == 9:
                     self.color = (0, 255, 0)
