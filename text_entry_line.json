@@ -1,0 +1,18 @@
+ {
+     "text_entry_line":
+     {
+         "colours":
+         {
+             "dark_bg": "#C0C0C0",
+             "normal_text": "#000000",
+             "selected_text": "#000000",
+             "normal_border": "#686868",
+             "text_cursor": "#000000"
+         },
+         "misc":
+         {
+             "border_width": "2",
+             "shadow_width": "0"
+         }
+     }
+ }

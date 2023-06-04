@@ -37,16 +37,19 @@ class SnakeGUI:
         background.fill(pygame.Color('#C0C0C0'))
 
         manager = pygame_gui.UIManager(self.window)
+        manager.get_theme().load_theme('text_box.json')
+        manager.get_theme().load_theme('text_entry_line.json')
+        manager.get_theme().load_theme('button.json')
 
         pygame_gui.elements.UITextBox(html_text='Snake',
-                                      relative_rect=pygame.Rect((230, 40), (140, 30)),
+                                      relative_rect=pygame.Rect((200, 40), (200, 30)),
                                       manager=manager)
 
         pygame_gui.elements.UITextBox(html_text='Provide your name',
                                       relative_rect=pygame.Rect((200, 70), (200, 30)),
                                       manager=manager)
 
-        entryName = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((230, 100), (140, 30)),
+        entryName = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((200, 100), (200, 30)),
                                                         initial_text=self.player_name,
                                                         manager=manager)
 
@@ -70,7 +73,7 @@ class SnakeGUI:
             starting_option=self.controls,
             manager=manager)
 
-        button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((230, 300), (140, 50)),
+        button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((200, 300), (200, 30)),
                                               text='Start game',
                                               manager=manager)
 
@@ -137,6 +140,8 @@ class SnakeGUI:
         background.fill(pygame.Color('#C0C0C0'))
 
         manager = pygame_gui.UIManager(self.window)
+        manager.get_theme().load_theme('text_box.json')
+        manager.get_theme().load_theme('button.json')
 
         pygame_gui.elements.UITextBox(html_text='GAME OVER',
                                       relative_rect=pygame.Rect((230, 40), (140, 30)),

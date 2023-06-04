@@ -1,0 +1,17 @@
+ {
+     "text_box":
+     {
+         "colours":
+         {
+             "dark_bg":"#C0C0C0",
+             "normal_text": "#000000"
+         },
+
+         "misc":
+         {
+            "border_width": "0",
+            "shadow_width": "0",
+            "text_horiz_alignment": "center"
+         }
+     }
+ }

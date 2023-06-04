@@ -1,0 +1,25 @@
+ {
+     "button":
+     {
+         "colours":
+         {
+             "normal_bg": "#686868",
+             "hovered_bg": "#989898",
+             "selected_bg": "#808080",
+             "active_bg": "#3f3f3f",
+             "normal_text": "#FFFFFF",
+             "selected_text": "#FFFFFF",
+             "hovered_text": "#FFFFFF",
+             "active_text": "#FFFFFF"
+         },
+         "misc":
+         {
+             "border_width": "0",
+             "shadow_width": "0",
+             "tool_tip_delay": "1.0",
+             "text_horiz_alignment": "center",
+             "text_vert_alignment": "center",
+             "text_shadow_size": "0"
+         }
+     }
+ }
