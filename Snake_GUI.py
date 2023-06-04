@@ -73,7 +73,11 @@ class SnakeGUI:
             starting_option=self.controls,
             manager=manager)
 
-        button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((200, 300), (200, 30)),
+        button_score = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((200, 300), (200, 30)),
+                                                    text='Check best scores',
+                                                    manager=manager)
+
+        button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((200, 350), (200, 30)),
                                               text='Start game',
                                               manager=manager)
 
@@ -84,6 +88,11 @@ class SnakeGUI:
                     self.done = True
 
                 manager.process_events(event)
+
+            if button_score.check_pressed():
+                self.done = True
+                self.open_scores()
+                break
 
             if button.check_pressed():
                 self.player_name = entryName.get_text()
@@ -120,6 +129,69 @@ class SnakeGUI:
 
             if self.run_game:
                 self.start_game()
+
+        pygame.quit()
+
+    def open_scores(self):
+        result_file = Save_Score.SaveScore()
+        result_file.initiate_file()
+
+        dict1 = result_file.checkFirstPlace()
+
+        self.done = False
+        pygame.init()
+        clock = pygame.time.Clock()
+        pygame.display.set_caption('Snake best scores')
+        screen = pygame.display.set_mode(self.window)
+
+        background = pygame.Surface(self.window)
+        background.fill(pygame.Color('#C0C0C0'))
+
+        manager = pygame_gui.UIManager(self.window)
+        manager.get_theme().load_theme('text_box.json')
+        manager.get_theme().load_theme('button.json')
+
+        levels = "Level \n\n"
+        players = "Players \n\n"
+        best_scores = "Score \n\n"
+        for key in dict1.keys():
+            levels = levels + key + '\n'
+            players = players + dict1[key][0] + '\n'
+            best_scores = best_scores + dict1[key][1] + '\n'
+
+        pygame_gui.elements.UITextBox(html_text=levels,
+                                      relative_rect=pygame.Rect((40, 40), (200, 220)),
+                                      manager=manager)
+
+        pygame_gui.elements.UITextBox(html_text=players,
+                                      relative_rect=pygame.Rect((220, 40), (200, 220)),
+                                      manager=manager)
+
+        pygame_gui.elements.UITextBox(html_text=best_scores,
+                                      relative_rect=pygame.Rect((400, 40), (200, 220)),
+                                      manager=manager)
+
+        button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((175, 280), (250, 30)),
+                                              text='Back to main window',
+                                              manager=manager)
+
+        while not self.done:
+            time_delta = clock.tick(60) / 1000.0
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.done = True
+
+                manager.process_events(event)
+
+            if button.check_pressed():
+                self.done = True
+                self.start_window()
+                break
+
+            manager.update(time_delta)
+            screen.blit(background, (0, 0))
+            manager.draw_ui(screen)
+            pygame.display.flip()
 
         pygame.quit()
 
@@ -160,7 +232,7 @@ class SnakeGUI:
                                       relative_rect=pygame.Rect((175, 100), (250, 30)),
                                       manager=manager)
 
-        button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((175, 200), (250, 50)),
+        button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((175, 200), (250, 30)),
                                               text='Back to main window',
                                               manager=manager)
 

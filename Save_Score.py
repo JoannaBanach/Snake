@@ -62,10 +62,10 @@ class SaveScore:
             workbook[sheet].cell(row=current_place + 1, column=1, value=current_place)
             workbook[sheet].cell(row=current_place + 1, column=2, value=date.today().strftime('%Y-%m-%d'))
             workbook[sheet].cell(row=current_place + 1, column=3, value=player_name)
-            workbook[sheet].cell(row=current_place+1, column=4, value=score)
+            workbook[sheet].cell(row=current_place + 1, column=4, value=score)
 
         elif current_place < 11:
-            for i in range(current_last_place+1, current_place, -1):
+            for i in range(current_last_place + 1, current_place, -1):
                 workbook[sheet].cell(row=i + 1, column=1, value=i)
                 try:
                     workbook[sheet].cell(row=i + 1, column=2,
@@ -84,3 +84,20 @@ class SaveScore:
         workbook.close()
 
         return current_place
+
+    def checkFirstPlace(self):
+        score_dict = {}
+        workbook = openpyxl.load_workbook(self.name)
+        workbook.active
+
+        def nvl(value): return "-" if value is None else value
+        # nvl = lambda value: "-" if value is None else value
+
+        for level in self.levels:
+            sheet = level
+            score_dict[level] = [nvl(workbook[sheet].cell(row=2, column=3).value), str(
+                nvl(workbook[sheet].cell(row=2, column=4).value))]
+
+        workbook.close()
+
+        return score_dict
