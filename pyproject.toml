@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "snake-poetry"
+version = "1"
+description = "Project of creating new version of game 'Snake'"
+authors = ["Joanna Banachowicz"]
+readme = "README.md"
+packages = [{include = "snake_poetry"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pendulum = "^2.1.2"
+pygame = "^2.4.0"
+pygame-gui = "^0.6.9"
+xlsxwriter = "^3.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
